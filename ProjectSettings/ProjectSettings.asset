@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 0ae205c7bf2ce67478b615c46f0cb33b
+  productGUID: 9bd1d754ed30ecf4fb94056ade8049d5
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: GameMec_GameMechanicsTechDemo_ChrisFrench0259182_260410
+  productName: gameMathUnityDemoCharCont-ChrisFrench0259182-251127
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -842,14 +842,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: GameMec_GameMechanicsTechDemo_ChrisFrench0259182_260410
+  metroPackageName: gameMathUnityDemoCharCont-ChrisFrench0259182-251127
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: GameMec_GameMechanicsTechDemo_ChrisFrench0259182_260410
+  metroApplicationDescription: gameMathUnityDemoCharCont-ChrisFrench0259182-251127
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -920,10 +920,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e04143e9-9bf7-4e77-aa9d-7dc925de98b8
+  cloudProjectId: c7290dd6-1f8a-4151-a66f-d52744b1ec0a
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: GameMec_GameMechanicsTechDemo_ChrisFrench0259182_260410
+  projectName: gameMathUnityDemoCharCont-ChrisFrench0259182-251127
   organizationId: zel8339816
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

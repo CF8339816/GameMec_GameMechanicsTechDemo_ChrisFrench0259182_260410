@@ -28,7 +28,7 @@ public class DoorOpenScript : MonoBehaviour
 
         void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("character"))
         {
             _targetPos = _openPos;
         }
@@ -36,7 +36,7 @@ public class DoorOpenScript : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("character"))
         {
           _targetPos = _closedPos;
         }

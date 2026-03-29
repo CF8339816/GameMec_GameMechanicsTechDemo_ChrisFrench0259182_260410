@@ -10,14 +10,21 @@ public class teleport : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            CharacterController charCtrlr = other.GetComponent<CharacterController>();
+            if (charCtrlr != null && teleportTarget != null)
+            {
 
-            character.transform.position = teleportTarget.transform.position;
+                charCtrlr.enabled = false;
 
-            //if (destination != null)
-            //{
+                other.transform.position = teleportTarget.position;
 
-            //    other.transform.position = destination.position;
-            //}
+                other.transform.rotation = teleportTarget.rotation;
+
+                charCtrlr.enabled = true;
+
+
+            }
+
         }
     }
-    }
+}

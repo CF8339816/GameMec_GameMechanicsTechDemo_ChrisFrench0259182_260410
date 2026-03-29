@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
@@ -31,13 +32,18 @@ public class playercontroler : MonoBehaviour
     private float currentSpeed;
     private float xRotation = 0f;
 
+    public TextMeshProUGUI textPowerCells;
+    public TextMeshProUGUI textGrappleGun;
+
     private float targetSpeed;
     private float currentHorizontalSpeed;
     private Vector3 currentMovementInput;
     private Vector3 smoothMoveVelocity; // vector for the SmoothDamp function
      private GameObject PausedLevel; //stores current levvel duuring pause
     public GameObject PauseScreen;
-
+   private string Status = "No";
+    private int CellCount;
+   [SerializeField] private bool PowerOn;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,25 +54,30 @@ public class playercontroler : MonoBehaviour
         characterController.height = StandHeight;
         targetSpeed = MoveSpeed;
         currentHorizontalSpeed = MoveSpeed;
-    }
+        CellCount=0;
+        PowerOn=false;
+        SetTextPowerCells();
+        SetTextGrappleGun();
+
+}
 
 
     // Update is called once per frame
     void Update()
     {
-       
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //grounded check
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -15f; // small downward force to keep grounded
         }
-        else 
-        { 
-            isGrounded= false;  
+        else
+        {
+            isGrounded = false;
         }
 
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;// mouse rotation
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;     
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;// mouse rotation
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp vertical look
@@ -74,13 +85,13 @@ public class playercontroler : MonoBehaviour
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        
+
         float x = Input.GetAxis("Horizontal");  //movement
         float z = Input.GetAxis("Vertical");
 
-    
+
         currentMovementInput = transform.right * x + transform.forward * z;
-      
+
         if (currentMovementInput.magnitude > 1)// normalizes movement input in order to prevent diagional magnatude speed increases
         {
             currentMovementInput.Normalize();
@@ -93,54 +104,54 @@ public class playercontroler : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-       
+
         velocity.y += gravity * Time.deltaTime; // applies gravity to player object
         characterController.Move(velocity * Time.deltaTime);
 
-        
+
         HandleSpeedChanges();// calls the method below that has been used to adjust the sprint and crouch speeds  and limit sprinting while crouched
 
-        currentHorizontalSpeed = Mathf.SmoothDamp(currentHorizontalSpeed,targetSpeed,ref smoothMoveVelocity.x,movementSmoothTime);//  uses SmoothDamp to adjust ease in and out of horizontal movements
+        currentHorizontalSpeed = Mathf.SmoothDamp(currentHorizontalSpeed, targetSpeed, ref smoothMoveVelocity.x, movementSmoothTime);//  uses SmoothDamp to adjust ease in and out of horizontal movements
 
-
-        /* unity keeps telling me the shift and ctrl buttons  are not set up even though they are 
-         * so  i will code these outside of the input controler but here is the code i wanted to use for the commands 
-         * these are pre adding accelerration and decelleration so they are formated differently than the functions below
-         * 
-  
-        //if (Input.GetButtonDown("Shift") && isGrounded)  //sprint using input from input System
-        //{
-        //    currentSpeed = SprintSpeed;
-        //}
-        //else if (Input.GetButtonUp("Shift") && isGrounded)
-        //{
-        //    currentSpeed = MoveSpeed;
-        //}
-
-   
-        //if (Input.GetButtonDown("Control") && isGrounded) //crouch using input from input System
-        //{
-        //    isCrouching = !isCrouching;
-        //    if (isCrouching)
-        //    {
-        //        characterController.height = CrouchHeight;
-        //        currentSpeed = CrouchSpeed;
-        //    }
-        //    else if (Input.GetButtonUp("Control") && isGrounded)
-        //    {
-        //        characterController.height = StandHeight;
-        //        currentSpeed = MoveSpeed;
-        //    }
-        //}
-       * 
-       * 
-       * 
-       * 
-       */
-       
-                
     }
-    //UM1
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PickUp")) //checks obj ffor PickUp tag
+        {
+            other.gameObject.SetActive(false); //deactivates obj when collided
+            CellCount++; //adds 1 to count when picked up
+            SetTextPowerCells();   //calls SetCountText method
+        }
+    }
+        void SetTextPowerCells()
+    {
+        textPowerCells.text = "Power Cells collected: " + CellCount.ToString() + "/8"   ; // sets count to output to string
+
+        if (CellCount == 8 )  
+        {
+            PowerOn = true;
+        }
+
+        else
+        {
+            PowerOn = false;
+        }
+    }
+
+    void SetTextGrappleGun()
+    {
+       
+        if (PowerOn == true)  
+        {
+            Status = "Yes";
+        }
+        else
+        {
+            Status = "No";
+        } 
+        textGrappleGun.text = "Grapple Gun Powered: " + Status; 
+    }
+
     private void HandleSpeedChanges()
     {
         

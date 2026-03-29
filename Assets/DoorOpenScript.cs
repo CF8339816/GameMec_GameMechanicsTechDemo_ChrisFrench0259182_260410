@@ -27,19 +27,19 @@ public class DoorOpenScript : MonoBehaviour
     }
 
         void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("character"))
         {
-            _targetPos = _openPos;
+            if (other.CompareTag("Player"))
+            {
+                _targetPos = _openPos;
+            }
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("character"))
-        {
-          _targetPos = _closedPos;
-        }
-    }
+    
+      void OnTriggerExit(Collider other)
+      {
+          if (other.CompareTag("Player"))
+          {
+            _targetPos = _closedPos;
+          }
+      }
 
 }

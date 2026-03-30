@@ -41,9 +41,9 @@ public class playercontroler : MonoBehaviour
     private Vector3 smoothMoveVelocity; // vector for the SmoothDamp function
      private GameObject PausedLevel; //stores current levvel duuring pause
     public GameObject PauseScreen;
-   private string Status = "No";
+   
     private int CellCount;
-   [SerializeField] private bool PowerOn;
+   [SerializeField] public bool PowerOn;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,7 +57,7 @@ public class playercontroler : MonoBehaviour
         CellCount=0;
         PowerOn=false;
         SetTextPowerCells();
-        SetTextGrappleGun();
+        //SetTextGrappleGun();
 
 }
 
@@ -65,7 +65,7 @@ public class playercontroler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //grounded check
         if (isGrounded && velocity.y < 0)
         {
@@ -138,19 +138,19 @@ public class playercontroler : MonoBehaviour
         }
     }
 
-    void SetTextGrappleGun()
-    {
-       
-        if (PowerOn == true)  
-        {
-            Status = "Yes";
-        }
-        else
-        {
-            Status = "No";
-        } 
-        textGrappleGun.text = "Grapple Gun Powered: " + Status; 
-    }
+    //void SetTextGrappleGun()
+    //{
+    //   // textGrappleGun.text = "Grapple Gun Powered: ";
+    //    if (PowerOn == true)  
+    //    {
+    //        textGrappleGun.text = "Grapple Gun Powered: Yes";
+    //    }
+    //    else
+    //    {
+    //        textGrappleGun.text = "Grapple Gun Powered: No";
+    //    } 
+        
+    //}
 
     private void HandleSpeedChanges()
     {

@@ -8,120 +8,118 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlatformMovementScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
 
-    public enum MovementType { Loop, PingPong } //sets up the enum for switch select between the two movement choices.
-    [SerializeField] MovementType _movementType; //sets up the user interaction to select the movement type
+    public enum MovementType { Loop, PingPong } 
+    [SerializeField] MovementType _movementType; 
 
     Rigidbody rb;  
     GameObject platform;
 
-    List<Vector3> _platCoords = new List<Vector3>();//Provided code
+    List<Vector3> _platCoords = new List<Vector3>();
 
-    [SerializeField] float _speed; //Provided code
+    [SerializeField] float _speed; 
 
 
     private void Start()
     {
 
-        rb = GetComponent<Rigidbody>();//Provided code
-        rb.isKinematic = true;//Provided code
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
 
-        foreach (Transform childTransform in this.transform)//Provided code
+        foreach (Transform childTransform in this.transform)
         {
-            if (!childTransform.CompareTag("PlatCoords"))//Provided code
+            if (!childTransform.CompareTag("PlatCoords"))
             {
                 continue;
             }
-            _platCoords.Add(childTransform.position);//Provided code
+            _platCoords.Add(childTransform.position);
         }
 
-        if (_platCoords.Count == 0)//Provided code
+        if (_platCoords.Count == 0)
         {
             return;
         }
-        transform.position = _platCoords[0];//Provided code
-
-        if (_platCoords.Count > 1)//Provided code
+        transform.position = _platCoords[0];
+        if (_platCoords.Count > 1)
         {
             StartCoroutine(MoveBetweenWayPoints());
         }
 
-        switch (_movementType)// the switch to set up rthe movement type callouts once selected
+        switch (_movementType)
         {
-            case MovementType.Loop:// nstandard looping animation
+            case MovementType.Loop:
                 StartCoroutine(MoveBetweenWayPoints());
                 break;
-            case MovementType.PingPong:  // standart loop to the end point then reverses back to the start then begins loop again
+            case MovementType.PingPong:  
                 StartCoroutine(PingPong());
                 break;
         }
     }
 
-    IEnumerator MoveBetweenWayPoints() //initial  move between waypoints coroutine
+    IEnumerator MoveBetweenWayPoints() 
     {
-        int currentIndex = 0;// start at first position
+        int currentIndex = 0;
         while (true)
         {
-            yield return MoveToTarget(_platCoords[currentIndex]); // sets a stop to recieve info from the movemnt enumerator
-            yield return new WaitForSeconds(1.0f);   // sets a delay of 1 second at each waypoint
-            currentIndex = (currentIndex + 1) % _platCoords.Count; // sets up the  next step in the path by moving the waypoint to
-                                                                  // the next one in the list
+            yield return MoveToTarget(_platCoords[currentIndex]); 
+            yield return new WaitForSeconds(1.0f);  
+            currentIndex = (currentIndex + 1) % _platCoords.Count;
+                                                                  
         }
     }
 
-    IEnumerator PingPong() // initalizes the  ping pong front to back anc back to front movement  coroutine
+    IEnumerator PingPong() 
     {
-        int currentIndex = 0; //start at ffirst position 
-        int direction = 1; //sets direction to movve  Pos forward neg for backward
+        int currentIndex = 0; 
+        int direction = 1; 
         while (true)
         {
-            yield return MoveToTarget(_platCoords[currentIndex]); // sets a stop to recieve info from the movemnt enumerator
-            yield return new WaitForSeconds(1.0f); // sets a delay of 1 second at each waypoint
+            yield return MoveToTarget(_platCoords[currentIndex]); 
+            yield return new WaitForSeconds(1.0f); 
 
-            if (currentIndex == _platCoords.Count - 1) direction = -1; // checks if the movement is on its way back  and sets next
-                                                                      // to the previous one in  the list 
-            else if (currentIndex == 0) direction = 1; // checks if the starting waytpoint is the first one in the list  and moves
-                                                       // the destination tho the next  waypoiontin the list
+            if (currentIndex == _platCoords.Count - 1) direction = -1;
+                                                                     
+            else if (currentIndex == 0) direction = 1;
+                                                      
 
             currentIndex += direction;
         }
     }
 
-    IEnumerator MoveToTarget(Vector3 target)// sets upo the move to the next  position defined enumerator  coroutine
+    IEnumerator MoveToTarget(Vector3 target)
     {
-        while (Vector3.Distance(rb.position, target) > 0.01f)// checks for closeness to target for easement
+        while (Vector3.Distance(rb.position, target) > 0.01f)
         {
-            Vector3 nextPos = Vector3.MoveTowards(rb.position, target, _speed * Time.deltaTime); //formuila to move to next position
-            rb.MovePosition(nextPos); // sets the move position to next position
-            yield return new WaitForFixedUpdate(); // caused a break in loop to wait on the fixed update before continuing loop
+            Vector3 nextPos = Vector3.MoveTowards(rb.position, target, _speed * Time.deltaTime);
+            rb.MovePosition(nextPos); 
+            yield return new WaitForFixedUpdate();
         }
     }
 
-    private void OnDrawGizmos()  //Provided code
+    private void OnDrawGizmos()  
     {
 
-        if (Application.isPlaying) return;//Provided code
+        if (Application.isPlaying) return;
 
-        List<Vector3> gizmoWaypoints = new List<Vector3>();//Provided code to make the vector list for  waypoints
-
-        foreach (Transform child in transform)//Provided code
+        List<Vector3> gizmoWaypoints = new List<Vector3>();
+        foreach (Transform child in transform)
         {
-            if (child.CompareTag("PlatCoords"))//Provided code
+            if (child.CompareTag("PlatCoords"))
             {
                 gizmoWaypoints.Add(child.position);
             }
         }
 
-        if (gizmoWaypoints.Count == 0) return;//Provided code
+        if (gizmoWaypoints.Count == 0) return;
 
-        Gizmos.color = Color.red;//Provided code
+        Gizmos.color = Color.red;
 
-        for (int i = 0; i < gizmoWaypoints.Count; i++)//Provided code
+        for (int i = 0; i < gizmoWaypoints.Count; i++)
         {
-            Gizmos.DrawSphere(gizmoWaypoints[i], 0.2f);//Provided code
+            Gizmos.DrawSphere(gizmoWaypoints[i], 0.2f);
 
-            if (i < gizmoWaypoints.Count - 1)//Provided code
+            if (i < gizmoWaypoints.Count - 1)
             {
                 Gizmos.DrawLine(gizmoWaypoints[i], gizmoWaypoints[i + 1]);
             }

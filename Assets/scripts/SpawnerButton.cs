@@ -34,7 +34,7 @@ public class InteractableObject : MonoBehaviour
 
         
         popupUI.SetActive(false);
-        Destroy(gameObject); 
+     
     }
 
     private void OnTriggerEnter(Collider other)

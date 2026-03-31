@@ -7,6 +7,7 @@ TagManager:
   - PlatCoords
   - Trigger
   - PickUp
+  - Text
   layers:
   - Default
   - TransparentFX

@@ -20,11 +20,14 @@ public class camLookControler : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp vertical look
-        zLocation = Mathf.Clamp(0f,0f, 2f);
+        
+      //  float zLocation = Mathf.Clamp(0f,0f, 2f);
+
+
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        //Camera.main.transform.localPosition = Vector3Lerp(0f, 0f, zLocation);
+       //Camera.main.transform.localPosition = new Vector3(0,0, zLocation);
         //transform.localPosition(Vector3.forward * mouseX);
 
         float x = Input.GetAxis("Horizontal");  //movement

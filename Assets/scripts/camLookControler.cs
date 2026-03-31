@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem; // Needed to read input context
 
@@ -7,7 +8,7 @@ public class camLookControler : MonoBehaviour
   
     [SerializeField] float mouseSensitivity = 100f;
     private float xRotation = 0f;
-
+    private float zLocation = 0f;
 
 
     void Update()
@@ -19,10 +20,12 @@ public class camLookControler : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp vertical look
-
+        zLocation = Mathf.Clamp(0f,0f, 2f);
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
+        //Camera.main.transform.localPosition = Vector3Lerp(0f, 0f, zLocation);
+        //transform.localPosition(Vector3.forward * mouseX);
 
         float x = Input.GetAxis("Horizontal");  //movement
         float z = Input.GetAxis("Vertical");

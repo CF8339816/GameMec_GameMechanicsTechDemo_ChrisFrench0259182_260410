@@ -34,14 +34,22 @@ public class playercontroler : MonoBehaviour
 
     public TextMeshProUGUI textPowerCells;
     public TextMeshProUGUI textGrappleGun;
-
+    //public GrappleStatus grappleStatus;
     private float targetSpeed;
     private float currentHorizontalSpeed;
     private Vector3 currentMovementInput;
     private Vector3 smoothMoveVelocity; // vector for the SmoothDamp function
      private GameObject PausedLevel; //stores current levvel duuring pause
     public GameObject PauseScreen;
-   
+    ///GrappleStatus Vars
+    private playercontroler playerScript;
+  
+    public Camera firstPersonCam;
+    public Camera grappleCamera;
+    /// </summary>
+
+
+
     private int CellCount;
    [SerializeField] public bool PowerOn;
 
@@ -57,7 +65,7 @@ public class playercontroler : MonoBehaviour
         CellCount=0;
         PowerOn=false;
         SetTextPowerCells();
-        //SetTextGrappleGun();
+        //grappleStatus.SetTextGrappleGun();
 
 }
 
@@ -138,19 +146,28 @@ public class playercontroler : MonoBehaviour
         }
     }
 
-    //void SetTextGrappleGun()
-    //{
-    //   // textGrappleGun.text = "Grapple Gun Powered: ";
-    //    if (PowerOn == true)  
-    //    {
-    //        textGrappleGun.text = "Grapple Gun Powered: Yes";
-    //    }
-    //    else
-    //    {
-    //        textGrappleGun.text = "Grapple Gun Powered: No";
-    //    } 
-        
-    //}
+    public void SetTextGrappleGun()
+    {
+
+        if (playerScript != null)
+        {
+            if (playerScript.PowerOn == true)
+            {
+                textGrappleGun.text = "Grapple Gun Powered: Yes";
+                grappleCamera.enabled = true;
+                firstPersonCam.enabled = false;
+
+
+            }
+            else
+            {
+                textGrappleGun.text = "Grapple Gun Powered: No";
+
+                firstPersonCam.enabled = true;
+                grappleCamera.enabled = false;
+            }
+        }
+    }
 
     private void HandleSpeedChanges()
     {

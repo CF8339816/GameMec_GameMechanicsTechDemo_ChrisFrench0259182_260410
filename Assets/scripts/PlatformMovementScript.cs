@@ -76,14 +76,21 @@ public class PlatformMovementScript : MonoBehaviour
         while (true)
         {
             yield return MoveToTarget(_platCoords[currentIndex]); 
-            yield return new WaitForSeconds(1.0f); 
+            yield return new WaitForSeconds(.5f); 
 
             if (currentIndex == _platCoords.Count - 1) direction = -1;
                                                                      
             else if (currentIndex == 0) direction = 1;
                                                       
-
-            currentIndex += direction;
+            if (currentIndex ==0)
+            {
+                yield return new WaitForSeconds(3.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+                currentIndex += direction;
         }
     }
 

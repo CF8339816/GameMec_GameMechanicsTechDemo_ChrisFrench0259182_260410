@@ -12,7 +12,7 @@ public class InteractableObject : MonoBehaviour
     public GameObject popupUI; 
     public TextMeshProUGUI popupText;
 
-    private bool isPlayerNearby = false;
+    private bool isPlayerNear = false;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class InteractableObject : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E)) 
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E)) 
         {
             Interact();
         }
@@ -41,7 +41,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerNearby = true;
+            isPlayerNear = true;
             if (popupUI != null)
             {
                 popupText.text = "Press [" + interactKey + "] to Interact";
@@ -54,7 +54,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerNearby = false;
+            isPlayerNear = false;
             if (popupUI != null) popupUI.SetActive(false);
         }
     }

@@ -42,7 +42,7 @@ public class playercontroler : MonoBehaviour
      private GameObject PausedLevel; //stores current levvel duuring pause
     public GameObject PauseScreen;
     ///GrappleStatus Vars
-    private playercontroler playerScript;
+   public playercontroler playerScript;
   
     public Camera firstPersonCam;
     public Camera grappleCamera;
@@ -113,7 +113,7 @@ public class playercontroler : MonoBehaviour
         }
 
 
-        velocity.y += gravity * Time.deltaTime; // applies gravity to player object
+        velocity.y += gravity * Time.deltaTime; // applies gravity to character object
         characterController.Move(velocity * Time.deltaTime);
 
 
@@ -154,9 +154,9 @@ public class playercontroler : MonoBehaviour
             if (playerScript.PowerOn == true)
             {
                 textGrappleGun.text = "Grapple Gun Powered: Yes";
-                grappleCamera.enabled = true;
-                firstPersonCam.enabled = false;
-
+                // grappleCamera.enabled = true;
+                // firstPersonCam.enabled = false;
+                firstPersonCam.enabled = true;
 
             }
             else
@@ -164,7 +164,7 @@ public class playercontroler : MonoBehaviour
                 textGrappleGun.text = "Grapple Gun Powered: No";
 
                 firstPersonCam.enabled = true;
-                grappleCamera.enabled = false;
+               // grappleCamera.enabled = false;
             }
         }
     }

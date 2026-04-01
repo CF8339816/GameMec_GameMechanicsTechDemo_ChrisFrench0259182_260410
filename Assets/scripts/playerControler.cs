@@ -138,7 +138,7 @@ public class playercontroler : MonoBehaviour
         if (CellCount == 8 )  
         {
             PowerOn = true; 
-            textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouuse to grapple ";
+            textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouse to grapple and pull object";
 
 
         }

@@ -137,37 +137,44 @@ public class playercontroler : MonoBehaviour
 
         if (CellCount == 8 )  
         {
-            PowerOn = true;
+            PowerOn = true; 
+            textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouuse to grapple ";
+
+
         }
 
         else
         {
             PowerOn = false;
+            textGrappleGun.text = "Grapple Gun Powered: No";
+
+
         }
     }
 
-    public void SetTextGrappleGun()
-    {
+    //public void SetTextGrappleGun()
+    //{
 
-        if (playerScript != null)
-        {
-            if (playerScript.PowerOn == true)
-            {
-                textGrappleGun.text = "Grapple Gun Powered: Yes";
-                // grappleCamera.enabled = true;
-                // firstPersonCam.enabled = false;
-                firstPersonCam.enabled = true;
+    //    //if (playerScript != null)
+    //    //{
+    //        if (playerScript != null && playerScript.PowerOn == true)
+    //        {
+    //        textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n" +
+    //             "right mouuse to grapple ";
+    //        // grappleCamera.enabled = true;
+    //        // firstPersonCam.enabled = false;
+    //        firstPersonCam.enabled = true;
 
-            }
-            else
-            {
-                textGrappleGun.text = "Grapple Gun Powered: No";
+    //        }
+    //        else
+    //        {
+    //            textGrappleGun.text = "Grapple Gun Powered: No";
 
-                firstPersonCam.enabled = true;
-               // grappleCamera.enabled = false;
-            }
-        }
-    }
+    //            firstPersonCam.enabled = true;
+    //           // grappleCamera.enabled = false;
+    //        }
+    //    //}
+    //}
 
     private void HandleSpeedChanges()
     {

@@ -1,5 +1,6 @@
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrappleGunCtrl : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GrappleGunCtrl : MonoBehaviour
     public Transform character;
     public playercontroler playerScript;
     public LayerMask Grappleable;
-
+    public TextMeshProUGUI textGrappleGun;
     [Header("Settings")]
     public float maxDistance = 100f;
     public float pullSpeed = 20f;
@@ -22,8 +23,9 @@ public class GrappleGunCtrl : MonoBehaviour
 
     private Vector3 grapplePoint;
     private SpringJoint joint;
-    private bool isPulling = false;
-
+    private bool isPullingPlayer = false;
+    private bool isPullingObject = false;
+    private Rigidbody targetBody;
 
     void Start()
     {
@@ -43,20 +45,42 @@ public class GrappleGunCtrl : MonoBehaviour
         //    }
         UpdateCrosshairVisibility();
 
-        if (Input.GetMouseButtonDown(2)) StartPull();//MiddleMouse
+        //if (Input.GetMouseButtonDown(2)) StartPull();//MiddleMouse
+        if (Input.GetMouseButtonDown(2)) StartPullPlayer();
         if (Input.GetMouseButtonUp(2)) StopGrapple();
 
-        if (Input.GetMouseButtonDown(1)) StartSwing();//rightMouse
+         //if (Input.GetMouseButtonDown(1)) StartSwing();//rightMouse
+        if (Input.GetMouseButtonDown(1)) StartPullObject();
         if (Input.GetMouseButtonUp(1)) StopGrapple();
     }
 
     void LateUpdate()
     {
-        DrawRope();
-        if (isPulling)
+        //DrawRope();
+        //if (isPullingPlayer)
+        //{
+        //   character.position = Vector3.MoveTowards(character.position, grapplePoint, pullSpeed * Time.deltaTime);
+        //}
+
+        if (isPullingPlayer)
         {
-           character.position = Vector3.MoveTowards(character.position, grapplePoint, pullSpeed * Time.deltaTime);
+            DrawRope(grapplePoint);
+            character.position = Vector3.MoveTowards(character.position, grapplePoint, pullSpeed * Time.deltaTime);
+            if (Vector3.Distance(character.position, grapplePoint) < 1.5f) StopGrapple();
         }
+
+        if (isPullingObject && targetBody != null)
+        {
+            DrawRope(targetBody.position);
+            
+            targetBody.position = Vector3.MoveTowards(targetBody.position, barrel.position, pullSpeed * Time.deltaTime);
+          
+            targetBody.linearVelocity = Vector3.zero;
+
+            if (Vector3.Distance(targetBody.position, barrel.position) < 1.5f) StopGrapple();
+        }
+
+
     }
 
 
@@ -66,59 +90,81 @@ public class GrappleGunCtrl : MonoBehaviour
         if (crosshair == null || !playerScript.PowerOn) return;
         {
 
-
+           
             //if (playerScript.PowerOn == true)
             //{
 
-                bool canGrapple = Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable);
+            bool canGrapple = Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable);
 
                 crosshair.enabled = canGrapple;
             //}
         }
     }
-    void StartPull()
+    void StartPullPlayer()
     {
         if (Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable))
         {
             grapplePoint = hit.point;
-            isPulling = true;
+            isPullingPlayer = true;
             lineRender.positionCount = 2;
         }
     }
-
-    void StartSwing()
+    void StartPullObject()
     {
         if (Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable))
         {
-            grapplePoint = hit.point;
-            joint = character.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
+           
+            if (hit.collider.GetComponent<Rigidbody>())
+            {
+                targetBody = hit.collider.GetComponent<Rigidbody>();
+                isPullingObject = true;
+                lineRender.positionCount = 2;
+            }
+        }
+    }
+    //void StartSwing()
+    //{
+    //    if (Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable))
+    //    {
+    //        grapplePoint = hit.point;
+    //        joint = character.gameObject.AddComponent<SpringJoint>();
+    //        joint.autoConfigureConnectedAnchor = false;
+    //        joint.connectedAnchor = grapplePoint;
 
-            float distanceFromPoint = Vector3.Distance(character.position, grapplePoint);
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
+    //        float distanceFromPoint = Vector3.Distance(character.position, grapplePoint);
+    //        joint.maxDistance = distanceFromPoint * 0.8f;
+    //        joint.minDistance = distanceFromPoint * 0.25f;
 
             
-            joint.spring = 4.5f;
-            joint.damper = 7f;
-            joint.massScale = 4.5f;
+    //        joint.spring = 4.5f;
+    //        joint.damper = 7f;
+    //        joint.massScale = 4.5f;
 
-            lineRender.positionCount = 2;
-        }
-    }
+    //        lineRender.positionCount = 2;
+    //    }
+    //}
 
     void StopGrapple()
     {
         lineRender.positionCount = 0;
-        isPulling = false;
-        Destroy(joint);
+        isPullingPlayer = false;
+        isPullingObject = false;
+        targetBody = null;
+        lineRender.positionCount = 0;
+        //isPulling = false;
+        //Destroy(joint);
     }
 
-    void DrawRope()
+
+    void DrawRope(Vector3 targetPos)
     {
-        if (!joint && !isPulling) return;
         lineRender.SetPosition(0, barrel.position);
-        lineRender.SetPosition(1, grapplePoint);
+        lineRender.SetPosition(1, targetPos);
     }
+    //void DrawRope()
+    //{
+    //    if (!joint && !isPulling) return;
+    //    lineRender.SetPosition(0, barrel.position);
+    //    lineRender.SetPosition(1, grapplePoint);
+    //}
 }

@@ -17,23 +17,26 @@ public class GrappleGunCtrl : MonoBehaviour
     public float pullSpeed = 20f;
 
     [Header("Crosshair Settings")]
-    public Image crosshair;
+    public Image canGrappleCrosshair;
+    public Image NormalDotSite;
     //public Color normalColor = Color.white;
     //public Color canGrappleColor = Color.green;
 
     private Vector3 grapplePoint;
-    private SpringJoint joint;
+   // private SpringJoint joint;
     private bool isPullingPlayer = false;
     private bool isPullingObject = false;
     private Rigidbody targetBody;
 
     void Start()
     {
-        
-        if (crosshair != null)
-            crosshair.enabled = false;
 
-    
+        if (canGrappleCrosshair != null)
+       // {
+            canGrappleCrosshair.enabled = false;
+           NormalDotSite.enabled = true;
+        //}
+
     }
     void Update()
     {
@@ -87,7 +90,7 @@ public class GrappleGunCtrl : MonoBehaviour
     void UpdateCrosshairVisibility()
     {
         //if (crosshair == null ) return;
-        if (crosshair == null || !playerScript.PowerOn) return;
+        if (canGrappleCrosshair == null || !playerScript.PowerOn) return;
         {
 
            
@@ -95,8 +98,8 @@ public class GrappleGunCtrl : MonoBehaviour
             //{
 
             bool canGrapple = Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable);
-
-                crosshair.enabled = canGrapple;
+      
+            canGrappleCrosshair.enabled = canGrapple;
             //}
         }
     }

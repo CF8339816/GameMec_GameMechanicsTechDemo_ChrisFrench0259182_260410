@@ -1,15 +1,15 @@
+using TMPro;
 using UnityEngine;
-using TMPro; // Required for the popup text
 
-public class SpawnerButton : MonoBehaviour
+public class ActivateGoalScript : MonoBehaviour
 {
     [Header("Settings")]
-    public GameObject prefabToSpawn;
-    public Transform spawnLocation;
-    public string interactKey = "E"; 
+    public GameObject ExitGoal;
+    
+    public string interactKey = "E";
 
     [Header("UI Reference")]
-    public GameObject popupUI; 
+    public GameObject popupUI;
     public TextMeshProUGUI popupText;
 
     private bool isPlayerNear = false;
@@ -21,7 +21,7 @@ public class SpawnerButton : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E)) 
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
         }
@@ -29,12 +29,12 @@ public class SpawnerButton : MonoBehaviour
 
     void Interact()
     {
-        
-        Instantiate(prefabToSpawn, spawnLocation.position, spawnLocation.rotation);
 
-        
+
+
+       ExitGoal.SetActive(true);
         popupUI.SetActive(false);
-     
+
     }
 
     private void OnTriggerEnter(Collider other)

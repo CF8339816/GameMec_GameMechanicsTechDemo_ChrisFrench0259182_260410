@@ -7,7 +7,7 @@ public class GrappleStatus : MonoBehaviour
     public TMPro.TextMeshProUGUI textGrappleGun;
     public Camera firstPersonCam;
     public Camera grappleCamera;
-
+   // public GameObject GrappleSpooger;
     void Update()
     {
         SetTextGrappleGun();
@@ -21,9 +21,9 @@ public class GrappleStatus : MonoBehaviour
             if (playerScript.PowerOn == true)
             {
                 textGrappleGun.text = "Grapple Gun Powered: Yes";
-                grappleCamera.enabled =true;
+                grappleCamera.enabled = true;
                 firstPersonCam.enabled = false;
-
+                // GrappleSpooger.SetActive = true;
 
             }
             else

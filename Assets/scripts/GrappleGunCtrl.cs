@@ -15,12 +15,11 @@ public class GrappleGunCtrl : MonoBehaviour
     [Header("Settings")]
     public float maxDistance = 100f;
     public float pullSpeed = 20f;
-
+    //public GameObject character.LineRenderer;
     [Header("Crosshair Settings")]
     public Image canGrappleCrosshair;
     public Image NormalDotSite;
-    //public Color normalColor = Color.white;
-    //public Color canGrappleColor = Color.green;
+ 
 
     private Vector3 grapplePoint;
    // private SpringJoint joint;
@@ -34,6 +33,7 @@ public class GrappleGunCtrl : MonoBehaviour
         if (canGrappleCrosshair != null)
        // {
             canGrappleCrosshair.enabled = false;
+      //  character.LineRenderer.SetActive = false;
            NormalDotSite.enabled = true;
         //}
 
@@ -48,11 +48,11 @@ public class GrappleGunCtrl : MonoBehaviour
         //    }
         UpdateCrosshairVisibility();
 
-        //if (Input.GetMouseButtonDown(2)) StartPull();//MiddleMouse
+       
         if (Input.GetMouseButtonDown(2)) StartPullPlayer();
         if (Input.GetMouseButtonUp(2)) StopGrapple();
 
-         //if (Input.GetMouseButtonDown(1)) StartSwing();//rightMouse
+       
         if (Input.GetMouseButtonDown(1)) StartPullObject();
         if (Input.GetMouseButtonUp(1)) StopGrapple();
     }

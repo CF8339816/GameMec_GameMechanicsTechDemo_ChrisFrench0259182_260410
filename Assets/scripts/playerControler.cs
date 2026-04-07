@@ -15,11 +15,11 @@ public class playercontroler : MonoBehaviour
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float StandHeight = 2f; // default ht of the character
     [SerializeField] float CrouchHeight = 1f; // target ht when crouched
-
+    [SerializeField] public float Health = 1f;
     [SerializeField] float accelerationRate = 5f; //accelleration and decelleration rate
     [SerializeField] float movementSmoothTime = 0.1f; //time the accel & decel takes
 
-
+    [SerializeField] public Transform ActiveCheckPoint;
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] Transform groundCheck; //checks the ground  objgect
     [SerializeField] float groundDistance = 0.2f; //grounding variance
@@ -43,7 +43,7 @@ public class playercontroler : MonoBehaviour
     public GameObject PauseScreen;
     ///GrappleStatus Vars
    public playercontroler playerScript;
-  
+    private Transform CheckPointGround;
     public Camera firstPersonCam;
     public Camera grappleCamera;
     /// </summary>
@@ -66,7 +66,10 @@ public class playercontroler : MonoBehaviour
         PowerOn=false;
         SetTextPowerCells();
         //grappleStatus.SetTextGrappleGun();
-
+        if (ActiveCheckPoint==null)
+        {
+            ActiveCheckPoint = (CheckPointGround);
+        }
 }
 
 

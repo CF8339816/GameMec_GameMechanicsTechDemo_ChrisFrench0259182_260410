@@ -8,7 +8,9 @@ public class SpringLauncher : MonoBehaviour
     public float gliderDelay = 0.5f;
     //public bool isGliding = false;
     //public GameObject Glider;
-
+    private Vector3 velocity;
+    [SerializeField] float gravity = -9.8f; //has to be neg because is downward force
+    [SerializeField] float jumpHeight = 2f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -18,12 +20,12 @@ public class SpringLauncher : MonoBehaviour
 
             if (rb != null)
             {
-               
-                rb.linearVelocity = Vector3.zero;
-              
-                rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
+                velocity.y = Mathf.Sqrt(jumpHeight * -15f * gravity);
+                //rb.linearVelocity = Vector3.zero;
 
-               
+                //rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
+
+
                 if (glider != null)
                 {
                     StartCoroutine(ActivateGlider(glider));

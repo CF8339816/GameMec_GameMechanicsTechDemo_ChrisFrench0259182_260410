@@ -1,10 +1,10 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 
 public class GrappleStatus : MonoBehaviour
 {
     private playercontroler playerScript; 
-    public TMPro.TextMeshProUGUI textGrappleGun;
+    public TextMeshProUGUI textGrappleGun;
     public Camera firstPersonCam;
     public Camera grappleCamera;
    // public GameObject GrappleSpooger;

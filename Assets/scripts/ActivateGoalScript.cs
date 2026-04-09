@@ -44,7 +44,7 @@ public class ActivateGoalScript : MonoBehaviour
             isPlayerNear = true;
             if (popupUI != null)
             {
-                popupText.text = "Press [" + interactKey + "] to Interact";
+                popupText.text = "Press [" + interactKey + "] to\n Interact";
                 popupUI.SetActive(true);
             }
         }

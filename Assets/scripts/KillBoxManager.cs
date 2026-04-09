@@ -2,30 +2,37 @@ using UnityEngine;
 
 public class KillBoxManager : MonoBehaviour
 {
-    public GameObject checkpoint;
-    public Transform target;
-    playercontroler playerScript;
+    Transform targetCheckPoint;
+    public playercontroler playerScript;
 
+    //[SerializeField] private Transform respawnPoint;
+    //void Start()
+    //{
+    //    targetCheckPoint = playerScript.ActiveCheckPoint;
 
+    //}
     void OnTriggerEnter(Collider other)
     {
-        playerScript.Health = 0;
-        target = playerScript.ActiveCheckPoint;
         if (other.CompareTag("Player"))
         {
+
+            Transform targetCheckPoint = playerScript.ActiveCheckPoint;
             CharacterController charCtrlr = other.GetComponent<CharacterController>();
-           
 
-            if (playerScript.Health == 0 && charCtrlr != null && target != null)
+            if (charCtrlr != null && targetCheckPoint != null)
+            {
+
                 charCtrlr.enabled = false;
-           
-
-            other.transform.position = target.position;
-            playerScript.Health = 1;
 
 
-            charCtrlr.enabled = true;
+                other.transform.position = targetCheckPoint.position;
 
+
+                playerScript.Health = 1;
+
+
+                charCtrlr.enabled = true;
+            }
         }
     }
 }

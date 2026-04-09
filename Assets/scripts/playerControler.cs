@@ -43,7 +43,9 @@ public class playercontroler : MonoBehaviour
     public GameObject PauseScreen;
     ///GrappleStatus Vars
    public playercontroler playerScript;
-    private Transform CheckPointGround;
+    public Transform CheckPointGround;
+    public Transform CheckPointTowerTop;
+    public Transform CheckPointTowerMid;
     public Camera firstPersonCam;
     public Camera grappleCamera;
     /// </summary>
@@ -66,9 +68,13 @@ public class playercontroler : MonoBehaviour
         PowerOn=false;
         SetTextPowerCells();
         //grappleStatus.SetTextGrappleGun();
-        if (ActiveCheckPoint==null)
+        if (ActiveCheckPoint == null)
         {
-            ActiveCheckPoint = (CheckPointGround);
+            ActiveCheckPoint = CheckPointGround;
+        }
+        else
+        { 
+            ActiveCheckPoint = CheckPointGround;
         }
 }
 

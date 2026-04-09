@@ -1,12 +1,13 @@
+
 using TMPro;
 using UnityEngine;
 
-public class ActivateGoalScript : MonoBehaviour
+public class DephaseBoxScript : MonoBehaviour
 {
     [Header("Settings")]
-    public GameObject ExitGoal;
-
-    public string interactKey = "E";
+    
+    public DensityManager densityManager;
+    public string interactKey = "P";
 
     [Header("UI Reference")]
     public GameObject popupUI;
@@ -21,7 +22,7 @@ public class ActivateGoalScript : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.P))
         {
             Interact();
         }
@@ -30,10 +31,7 @@ public class ActivateGoalScript : MonoBehaviour
     void Interact()
     {
 
-
-
-        ExitGoal.SetActive(true);
-        popupUI.SetActive(false);
+        densityManager.DensityShifter();
 
     }
 
@@ -44,7 +42,7 @@ public class ActivateGoalScript : MonoBehaviour
             isPlayerNear = true;
             if (popupUI != null)
             {
-                popupText.text = "Press [" + interactKey + "] to Interact";
+                popupText.text = "Press [" + interactKey + "] to \nde-/-phase\n blocks ";
                 popupUI.SetActive(true);
             }
         }

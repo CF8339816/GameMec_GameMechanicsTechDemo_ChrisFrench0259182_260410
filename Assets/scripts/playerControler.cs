@@ -73,7 +73,7 @@ public class playercontroler : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //grounded check
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // small downward force to keep grounded
+            velocity.y = -8f; // small downward force to keep grounded
         }
         else
         {

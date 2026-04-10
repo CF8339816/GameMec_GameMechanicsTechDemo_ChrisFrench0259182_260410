@@ -9,6 +9,7 @@ TagManager:
   - PickUp
   - Text
   - VariableCubes
+  - ground
   layers:
   - Default
   - TransparentFX

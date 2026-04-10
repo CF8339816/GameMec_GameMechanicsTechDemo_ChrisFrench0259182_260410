@@ -4,24 +4,22 @@ using System.Collections;
 
 public class SpringLauncher : MonoBehaviour
 {
-    public float launchForce = 180f;
-    public float gliderDelay = 0.5f;
+    public float launchHeight = 300f;
+    public float gliderDelay = 25.0f;
   
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Rigidbody ridgieB = other.GetComponent<Rigidbody>();
-           
+            CharacterController charCtrl = other.GetComponent<CharacterController>();
 
-            if (ridgieB != null)
-            {
-                ridgieB.linearVelocity = new Vector3(ridgieB.linearVelocity.x, 0, ridgieB.linearVelocity.z);
+            if (charCtrl != null)
+            { 
+                float launchVelocity = Mathf.Sqrt(launchHeight * -6f * -9.8f);
+
+                charCtrl.Move(Vector3.up * launchVelocity * Time.deltaTime);
 
 
-                ridgieB.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
-
-               
                 GlideControl glider = other.GetComponent<GlideControl>();
                 if (glider != null)
                 {
@@ -36,16 +34,7 @@ public class SpringLauncher : MonoBehaviour
         yield return new WaitForSeconds(gliderDelay);
         glider.StartGliding();
 
-        //isGliding = true;
-        
-        //if (isGliding = true)
-        //{
-        //    Glider.SetActive(true);
-        //}
-        //else 
-        //{
-        //    Glider.SetActive(true); 
-        //}
+
     }
 
     

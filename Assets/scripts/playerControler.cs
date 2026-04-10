@@ -66,17 +66,14 @@ public class playercontroler : MonoBehaviour
         {
             ActiveCheckPoint = CheckPointGround;
         }
-        else
-        {
-            ActiveCheckPoint = CheckPointGround;
-        }
+       
     }
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //grounded check
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -15f; // small downward force to keep grounded
+            velocity.y = -2f; // small downward force to keep grounded
         }
         else
         {
@@ -107,6 +104,7 @@ public class playercontroler : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded) // jump using input from input System
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+           
         }
 
         velocity.y += gravity * Time.deltaTime; // applies gravity to character object
@@ -140,7 +138,7 @@ public class playercontroler : MonoBehaviour
         if (CellCount == 8)
         {
             PowerOn = true;
-            textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouse to grapple and pull object";
+            textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple \n right mouse to grapple and pull object";
         }
 
         else

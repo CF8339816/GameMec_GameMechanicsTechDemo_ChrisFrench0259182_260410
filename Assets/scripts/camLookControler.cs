@@ -9,9 +9,9 @@ public class camLookControler : MonoBehaviour
     [SerializeField] float mouseSensitivity = 100f;
     private float xRotation = 0f;
     private float zLocation = 0f;
-    [SerializeField] float scrollSpeed = 10f; 
-    [SerializeField] float minZ = -15f;       
-    [SerializeField] float maxZ = 12f;
+    [SerializeField] float scrollSpeed = 1010f; 
+    [SerializeField] float minZ = -155f;       
+    [SerializeField] float maxZ = 122f;
 
     void Update()
     {
@@ -39,7 +39,7 @@ public class camLookControler : MonoBehaviour
        
         float scrollInput = Input.mouseScrollDelta.y;
 
-        zLocation += scrollInput * scrollSpeed * Time.deltaTime;
+        zLocation += (scrollInput * scrollSpeed * Time.deltaTime)*25;
         zLocation = Mathf.Clamp(zLocation, minZ, maxZ);
 
         Vector3 currentPos = Camera.main.transform.localPosition;

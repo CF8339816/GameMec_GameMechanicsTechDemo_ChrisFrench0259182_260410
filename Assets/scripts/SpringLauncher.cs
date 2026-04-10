@@ -4,28 +4,25 @@ using System.Collections;
 
 public class SpringLauncher : MonoBehaviour
 {
-    public float launchForce = 20f;
+    public float launchForce = 180f;
     public float gliderDelay = 0.5f;
-    //public bool isGliding = false;
-    //public GameObject Glider;
-    private Vector3 velocity;
-    [SerializeField] float gravity = -9.8f; //has to be neg because is downward force
-    [SerializeField] float jumpHeight = 2f;
+  
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            GlideControl glider = other.GetComponent<GlideControl>();
+            Rigidbody ridgieB = other.GetComponent<Rigidbody>();
+           
 
-            if (rb != null)
+            if (ridgieB != null)
             {
-                velocity.y = Mathf.Sqrt(jumpHeight * -15f * gravity);
-                //rb.linearVelocity = Vector3.zero;
-
-                //rb.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
+                ridgieB.linearVelocity = new Vector3(ridgieB.linearVelocity.x, 0, ridgieB.linearVelocity.z);
 
 
+                ridgieB.AddForce(Vector3.up * launchForce, ForceMode.Impulse);
+
+               
+                GlideControl glider = other.GetComponent<GlideControl>();
                 if (glider != null)
                 {
                     StartCoroutine(ActivateGlider(glider));

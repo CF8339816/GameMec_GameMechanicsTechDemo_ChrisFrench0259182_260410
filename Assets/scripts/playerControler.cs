@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.XR;
 public class playercontroler : MonoBehaviour
 {
     public CharacterController characterController;
-
     [SerializeField] float MoveSpeed = 10f;
     [SerializeField] float SprintSpeed = 15f;
     [SerializeField] float CrouchSpeed = 5f;
@@ -15,18 +14,17 @@ public class playercontroler : MonoBehaviour
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float StandHeight = 2f; // default ht of the character
     [SerializeField] float CrouchHeight = 1f; // target ht when crouched
-    [SerializeField] public float Health = 1f;
+   
     [SerializeField] float accelerationRate = 5f; //accelleration and decelleration rate
     [SerializeField] float movementSmoothTime = 0.1f; //time the accel & decel takes
-
-    [SerializeField] public Transform ActiveCheckPoint;
+   
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] Transform groundCheck; //checks the ground  objgect
     [SerializeField] float groundDistance = 0.2f; //grounding variance
     [SerializeField] LayerMask groundMask;
 
     private Vector3 velocity;
-    private bool isGrounded ;
+    public bool isGrounded ;
     private bool isSprinting = false;
     private bool isCrouching = false;
     private float currentSpeed;
@@ -34,7 +32,7 @@ public class playercontroler : MonoBehaviour
 
     public TextMeshProUGUI textPowerCells;
     public TextMeshProUGUI textGrappleGun;
-    //public GrappleStatus grappleStatus;
+    public Vector3 extVel;
     private float targetSpeed;
     private float currentHorizontalSpeed;
     private Vector3 currentMovementInput;
@@ -46,16 +44,13 @@ public class playercontroler : MonoBehaviour
     public Transform CheckPointGround;
     public Transform CheckPointTowerTop;
     public Transform CheckPointTowerMid;
-    public Camera firstPersonCam;
-    public Camera grappleCamera;
+    //public Camera firstPersonCam;
+    //public Camera grappleCamera;
     /// </summary>
-
-
-
     private int CellCount;
    [SerializeField] public bool PowerOn;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] public float Health = 1f;
+    [SerializeField] public Transform ActiveCheckPoint;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -72,17 +67,10 @@ public class playercontroler : MonoBehaviour
         {
             ActiveCheckPoint = CheckPointGround;
         }
-        else
-        { 
-            ActiveCheckPoint = CheckPointGround;
-        }
-}
-
-
-    // Update is called once per frame
+       
+    }
     void Update()
     {
-      
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //grounded check
         if (isGrounded && velocity.y < 0)
         {
@@ -102,10 +90,8 @@ public class playercontroler : MonoBehaviour
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-
         float x = Input.GetAxis("Horizontal");  //movement
         float z = Input.GetAxis("Vertical");
-
 
         currentMovementInput = transform.right * x + transform.forward * z;
 
@@ -121,15 +107,12 @@ public class playercontroler : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-
         velocity.y += gravity * Time.deltaTime; // applies gravity to character object
         characterController.Move(velocity * Time.deltaTime);
-
 
         HandleSpeedChanges();// calls the method below that has been used to adjust the sprint and crouch speeds  and limit sprinting while crouched
 
         currentHorizontalSpeed = Mathf.SmoothDamp(currentHorizontalSpeed, targetSpeed, ref smoothMoveVelocity.x, movementSmoothTime);//  uses SmoothDamp to adjust ease in and out of horizontal movements
-
     }
     void OnTriggerEnter(Collider other)
     {
@@ -140,7 +123,15 @@ public class playercontroler : MonoBehaviour
             SetTextPowerCells();   //calls SetCountText method
         }
     }
-        void SetTextPowerCells()
+    public void ResetVelocity()
+    {
+        velocity = Vector3.zero;
+    }
+    public void SetVerticalVelocity(float y)
+    {
+        velocity.y = y;
+    }
+    void SetTextPowerCells()
     {
         textPowerCells.text = "Power Cells collected: " + CellCount.ToString() + "/8"   ; // sets count to output to string
 
@@ -148,46 +139,16 @@ public class playercontroler : MonoBehaviour
         {
             PowerOn = true; 
             textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouse to grapple and pull object";
-
-
         }
 
         else
         {
             PowerOn = false;
             textGrappleGun.text = "Grapple Gun Powered: No";
-
-
         }
     }
-
-    //public void SetTextGrappleGun()
-    //{
-
-    //    //if (playerScript != null)
-    //    //{
-    //        if (playerScript != null && playerScript.PowerOn == true)
-    //        {
-    //        textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n" +
-    //             "right mouuse to grapple ";
-    //        // grappleCamera.enabled = true;
-    //        // firstPersonCam.enabled = false;
-    //        firstPersonCam.enabled = true;
-
-    //        }
-    //        else
-    //        {
-    //            textGrappleGun.text = "Grapple Gun Powered: No";
-
-    //            firstPersonCam.enabled = true;
-    //           // grappleCamera.enabled = false;
-    //        }
-    //    //}
-    //}
-
     private void HandleSpeedChanges()
     {
-        
         if (isCrouching)
         {
             targetSpeed = CrouchSpeed;

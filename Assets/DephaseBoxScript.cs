@@ -17,7 +17,10 @@ public class DephaseBoxScript : MonoBehaviour
 
     void Start()
     {
-        if (popupUI != null) popupUI.SetActive(false);
+        if (popupUI != null)
+        {
+            popupUI.SetActive(false);
+        }
     }
 
     void Update()

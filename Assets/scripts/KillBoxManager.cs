@@ -29,7 +29,7 @@ public class KillBoxManager : MonoBehaviour
 
 
                 playerScript.Health = 1;
-
+                playerScript.ResetVelocity();
 
                 charCtrlr.enabled = true;
             }

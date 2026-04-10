@@ -37,11 +37,7 @@ public class GameOverManager : MonoBehaviour
 
         }
             
-            //yield return new WaitForSeconds(ExitDelay);
-            //SetExitCountdownText();
-
-            //ExitGame();
-
+           
     }
     IEnumerator StartExitCountdown()
     {

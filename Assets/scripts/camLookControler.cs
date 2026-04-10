@@ -9,7 +9,9 @@ public class camLookControler : MonoBehaviour
     [SerializeField] float mouseSensitivity = 100f;
     private float xRotation = 0f;
     private float zLocation = 0f;
-
+    [SerializeField] float scrollSpeed = 10f; 
+    [SerializeField] float minZ = -15f;       
+    [SerializeField] float maxZ = 12f;
 
     void Update()
     {
@@ -34,7 +36,14 @@ public class camLookControler : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
+       
+        float scrollInput = Input.mouseScrollDelta.y;
 
+        zLocation += scrollInput * scrollSpeed * Time.deltaTime;
+        zLocation = Mathf.Clamp(zLocation, minZ, maxZ);
+
+        Vector3 currentPos = Camera.main.transform.localPosition;
+        Camera.main.transform.localPosition = new Vector3(currentPos.x, currentPos.y, zLocation);
 
     }
 

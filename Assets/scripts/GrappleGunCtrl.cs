@@ -6,7 +6,7 @@ public class GrappleGunCtrl : MonoBehaviour
 {
     [Header("References")]
     public LineRenderer lineRender;
-    public Transform barrel; 
+    public Transform barrel;
     public Transform firstPersonCam;
     public Transform character;
     public playercontroler playerScript;
@@ -14,15 +14,15 @@ public class GrappleGunCtrl : MonoBehaviour
     public TextMeshProUGUI textGrappleGun;
     [Header("Settings")]
     public float maxDistance = 100f;
-    public float pullSpeed = 20f;
+    public float pullSpeed = 200f;
     //public GameObject character.LineRenderer;
     [Header("Crosshair Settings")]
     public Image canGrappleCrosshair;
     public Image NormalDotSite;
- 
+
 
     private Vector3 grapplePoint;
-   // private SpringJoint joint;
+    // private SpringJoint joint;
     private bool isPullingPlayer = false;
     private bool isPullingObject = false;
     private Rigidbody targetBody;
@@ -31,39 +31,29 @@ public class GrappleGunCtrl : MonoBehaviour
     {
 
         if (canGrappleCrosshair != null)
-       // {
-            canGrappleCrosshair.enabled = false;
-      //  character.LineRenderer.SetActive = false;
-           NormalDotSite.enabled = true;
-        //}
+        {
+         canGrappleCrosshair.enabled = false;
 
+        NormalDotSite.enabled = true;
+        }
     }
     void Update()
     {
-        //    if (playerScript == null || !playerScript.PowerOn)
-        //    {
-        //        if (crosshair != null) crosshair.enabled = false;
-        //        if (isPulling || joint != null) StopGrapple();
-        //        return;
-        //    }
+
         UpdateCrosshairVisibility();
 
-       
+
         if (Input.GetMouseButtonDown(2)) StartPullPlayer();
         if (Input.GetMouseButtonUp(2)) StopGrapple();
 
-       
+
         if (Input.GetMouseButtonDown(1)) StartPullObject();
         if (Input.GetMouseButtonUp(1)) StopGrapple();
     }
 
     void LateUpdate()
     {
-        //DrawRope();
-        //if (isPullingPlayer)
-        //{
-        //   character.position = Vector3.MoveTowards(character.position, grapplePoint, pullSpeed * Time.deltaTime);
-        //}
+
 
         if (isPullingPlayer)
         {
@@ -75,9 +65,9 @@ public class GrappleGunCtrl : MonoBehaviour
         if (isPullingObject && targetBody != null)
         {
             DrawRope(targetBody.position);
-            
+
             targetBody.position = Vector3.MoveTowards(targetBody.position, barrel.position, pullSpeed * Time.deltaTime);
-          
+
             targetBody.linearVelocity = Vector3.zero;
 
             if (Vector3.Distance(targetBody.position, barrel.position) < 1.5f) StopGrapple();
@@ -89,19 +79,23 @@ public class GrappleGunCtrl : MonoBehaviour
 
     void UpdateCrosshairVisibility()
     {
-        //if (crosshair == null ) return;
-        if (canGrappleCrosshair == null || !playerScript.PowerOn) return;
+
+        if (canGrappleCrosshair == null ) return;
         {
+            if( !playerScript.PowerOn)
+            {
+                canGrappleCrosshair.enabled = false;
+                return;
 
-           
-            //if (playerScript.PowerOn == true)
-            //{
-
+            }
+            
+            
             bool canGrapple = Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable);
-      
+
             canGrappleCrosshair.enabled = canGrapple;
-            //}
         }
+
+
     }
     void StartPullPlayer()
     {
@@ -116,7 +110,7 @@ public class GrappleGunCtrl : MonoBehaviour
     {
         if (Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable))
         {
-           
+
             if (hit.collider.GetComponent<Rigidbody>())
             {
                 targetBody = hit.collider.GetComponent<Rigidbody>();
@@ -125,27 +119,7 @@ public class GrappleGunCtrl : MonoBehaviour
             }
         }
     }
-    //void StartSwing()
-    //{
-    //    if (Physics.Raycast(firstPersonCam.position, firstPersonCam.forward, out RaycastHit hit, maxDistance, Grappleable))
-    //    {
-    //        grapplePoint = hit.point;
-    //        joint = character.gameObject.AddComponent<SpringJoint>();
-    //        joint.autoConfigureConnectedAnchor = false;
-    //        joint.connectedAnchor = grapplePoint;
 
-    //        float distanceFromPoint = Vector3.Distance(character.position, grapplePoint);
-    //        joint.maxDistance = distanceFromPoint * 0.8f;
-    //        joint.minDistance = distanceFromPoint * 0.25f;
-
-            
-    //        joint.spring = 4.5f;
-    //        joint.damper = 7f;
-    //        joint.massScale = 4.5f;
-
-    //        lineRender.positionCount = 2;
-    //    }
-    //}
 
     void StopGrapple()
     {
@@ -154,8 +128,7 @@ public class GrappleGunCtrl : MonoBehaviour
         isPullingObject = false;
         targetBody = null;
         lineRender.positionCount = 0;
-        //isPulling = false;
-        //Destroy(joint);
+
     }
 
 
@@ -164,10 +137,5 @@ public class GrappleGunCtrl : MonoBehaviour
         lineRender.SetPosition(0, barrel.position);
         lineRender.SetPosition(1, targetPos);
     }
-    //void DrawRope()
-    //{
-    //    if (!joint && !isPulling) return;
-    //    lineRender.SetPosition(0, barrel.position);
-    //    lineRender.SetPosition(1, grapplePoint);
-    //}
 }
+   

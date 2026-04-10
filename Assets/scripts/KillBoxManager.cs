@@ -15,6 +15,13 @@ public class KillBoxManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            playercontroler playerScript = other.GetComponent<playercontroler>();
+
+            if (playerScript == null)
+            {
+                Debug.LogError("KillBox hit something tagged Player, but tthere is no player controler script!");
+                return;
+            }
 
             Transform targetCheckPoint = playerScript.ActiveCheckPoint;
             CharacterController charCtrlr = other.GetComponent<CharacterController>();

@@ -45,11 +45,12 @@ public class DensityManager : MonoBehaviour
             if (isDephased)
             {
                 rigidB.mass = 0.25f;
-
+                rigidB.isKinematic = true;
             }
             else
             {
                 rigidB.mass = 20.0f;
+                rigidB.isKinematic = false; 
             }
         }
 

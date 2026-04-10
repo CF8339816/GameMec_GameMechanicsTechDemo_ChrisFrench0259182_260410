@@ -14,43 +14,42 @@ public class playercontroler : MonoBehaviour
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float StandHeight = 2f; // default ht of the character
     [SerializeField] float CrouchHeight = 1f; // target ht when crouched
-   
+    [SerializeField] public float Health = 1f;
     [SerializeField] float accelerationRate = 5f; //accelleration and decelleration rate
     [SerializeField] float movementSmoothTime = 0.1f; //time the accel & decel takes
-   
+    [SerializeField] public Transform ActiveCheckPoint;
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] Transform groundCheck; //checks the ground  objgect
     [SerializeField] float groundDistance = 0.2f; //grounding variance
     [SerializeField] LayerMask groundMask;
 
     private Vector3 velocity;
-    public bool isGrounded ;
+    public bool isGrounded;
     private bool isSprinting = false;
     private bool isCrouching = false;
     private float currentSpeed;
     private float xRotation = 0f;
-
+    public Vector3 externalVelocity;
     public TextMeshProUGUI textPowerCells;
     public TextMeshProUGUI textGrappleGun;
-    public Vector3 extVel;
+    //public GrappleStatus grappleStatus;
     private float targetSpeed;
     private float currentHorizontalSpeed;
     private Vector3 currentMovementInput;
     private Vector3 smoothMoveVelocity; // vector for the SmoothDamp function
-     private GameObject PausedLevel; //stores current levvel duuring pause
+    private GameObject PausedLevel; //stores current levvel duuring pause
     public GameObject PauseScreen;
     ///GrappleStatus Vars
-   public playercontroler playerScript;
+    public playercontroler playerScript;
     public Transform CheckPointGround;
     public Transform CheckPointTowerTop;
     public Transform CheckPointTowerMid;
-    //public Camera firstPersonCam;
-    //public Camera grappleCamera;
+    public Camera firstPersonCam;
+    public Camera grappleCamera;
     /// </summary>
     private int CellCount;
-   [SerializeField] public bool PowerOn;
-    [SerializeField] public float Health = 1f;
-    [SerializeField] public Transform ActiveCheckPoint;
+    [SerializeField] public bool PowerOn;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -59,15 +58,18 @@ public class playercontroler : MonoBehaviour
         characterController.height = StandHeight;
         targetSpeed = MoveSpeed;
         currentHorizontalSpeed = MoveSpeed;
-        CellCount=0;
-        PowerOn=false;
+        CellCount = 0;
+        PowerOn = false;
         SetTextPowerCells();
         //grappleStatus.SetTextGrappleGun();
         if (ActiveCheckPoint == null)
         {
             ActiveCheckPoint = CheckPointGround;
         }
-       
+        else
+        {
+            ActiveCheckPoint = CheckPointGround;
+        }
     }
     void Update()
     {
@@ -123,21 +125,21 @@ public class playercontroler : MonoBehaviour
             SetTextPowerCells();   //calls SetCountText method
         }
     }
-    public void ResetVelocity()
-    {
-        velocity = Vector3.zero;
-    }
     public void SetVerticalVelocity(float y)
     {
         velocity.y = y;
     }
+    public void ResetVelocity()
+    {
+        velocity = Vector3.zero;
+    }
     void SetTextPowerCells()
     {
-        textPowerCells.text = "Power Cells collected: " + CellCount.ToString() + "/8"   ; // sets count to output to string
+        textPowerCells.text = "Power Cells collected: " + CellCount.ToString() + "/8"; // sets count to output to string
 
-        if (CellCount == 8 )  
+        if (CellCount == 8)
         {
-            PowerOn = true; 
+            PowerOn = true;
             textGrappleGun.text = "Grapple Gun Powered: Yes \ncenter mouse to grapple then space to climb up\n right mouse to grapple and pull object";
         }
 
@@ -162,7 +164,7 @@ public class playercontroler : MonoBehaviour
         {
             targetSpeed = MoveSpeed;
         }
-              
+
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
             isSprinting = true;
@@ -171,7 +173,7 @@ public class playercontroler : MonoBehaviour
         {
             isSprinting = false;
         }
-       
+
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
         {
             isCrouching = true;
@@ -182,16 +184,9 @@ public class playercontroler : MonoBehaviour
         {
             {
                 isCrouching = false;
-               characterController.height = StandHeight;
+                characterController.height = StandHeight;
             }
         }
     }
 
 }
-    
-    
-    
-    
- 
-
-

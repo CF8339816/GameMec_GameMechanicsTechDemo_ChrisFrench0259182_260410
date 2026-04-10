@@ -7784,7 +7784,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24561,7 +24565,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35666,7 +35674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38156,7 +38168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_UseGravity
@@ -38164,7 +38176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38394,7 +38406,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38533,7 +38549,7 @@ Transform:
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07462843, y: -0, z: -0, w: 0.99721146}
-  m_LocalPosition: {x: -0, y: 0.87, z: -0.08}
+  m_LocalPosition: {x: 0, y: 0.87, z: -0.08}
   m_LocalScale: {x: 1, y: 0.50502497, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38552,6 +38568,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  scrollSpeed: 2
+  minZ: -5
+  maxZ: 2
 --- !u!1 &969918515
 GameObject:
   m_ObjectHideFlags: 0
@@ -52803,12 +52822,14 @@ MonoBehaviour:
   SprintSpeed: 15
   CrouchSpeed: 5
   RotateSpeed: 100
-  gravity: -15
+  gravity: -5
   jumpHeight: 2
   StandHeight: 2
   CrouchHeight: 1
+  Health: 1
   accelerationRate: 5
   movementSmoothTime: 0.1
+  ActiveCheckPoint: {fileID: 0}
   mouseSensitivity: 800
   groundCheck: {fileID: 1150898118}
   groundDistance: 0.002
@@ -52816,17 +52837,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   isGrounded: 0
+  externalVelocity: {x: 0, y: 0, z: 0}
   textPowerCells: {fileID: 1323607803}
   textGrappleGun: {fileID: 1292924650}
-  extVel: {x: 0, y: 0, z: 0}
   PauseScreen: {fileID: 2137463657}
   playerScript: {fileID: 1634928849}
   CheckPointGround: {fileID: 143905330}
   CheckPointTowerTop: {fileID: 400224949}
   CheckPointTowerMid: {fileID: 1945032547}
+  firstPersonCam: {fileID: 961739752}
+  grappleCamera: {fileID: 961739752}
   PowerOn: 0
-  Health: 1
-  ActiveCheckPoint: {fileID: 0}
 --- !u!143 &1634928850
 CharacterController:
   m_ObjectHideFlags: 0
@@ -52859,7 +52880,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634928844}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac127a3b312ffb40aa12e2a73d2b4e5, type: 3}
   m_Name: 
@@ -52977,7 +52998,19 @@ MonoBehaviour:
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1634928849}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]'
   - m_PersistentCalls:
@@ -52989,11 +53022,35 @@ MonoBehaviour:
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1634928849}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
     m_ActionName: 'Player/Crouch[/Keyboard/ctrl,/Keyboard/leftCtrl]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1634928849}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
@@ -53005,53 +53062,25 @@ MonoBehaviour:
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1634928849}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/shift]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 634a41e5-0338-46fd-a569-3b14fba8ae01
     m_ActionName: 'Player/Pause[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
-    m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
-    m_ActionName: 'UI/Submit[/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
-    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 32b35790-4ed0-4e9a-aa41-69ac6d629449
-    m_ActionName: 'UI/Point[/Mouse/position,/Pen/position,/Touchscreen/touch0/position,/Touchscreen/touch1/position,/Touchscreen/touch2/position,/Touchscreen/touch3/position,/Touchscreen/touch4/position,/Touchscreen/touch5/position,/Touchscreen/touch6/position,/Touchscreen/touch7/position,/Touchscreen/touch8/position,/Touchscreen/touch9/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3c7022bf-7922-4f7c-a998-c437916075ad
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Pen/tip,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 44b200b1-1557-4083-816c-b22cbdf77ddf
-    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
-    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
-    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
-    m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 84617635}
@@ -53069,15 +53098,39 @@ MonoBehaviour:
     m_ActionId: 71c13b57-7113-4dfd-a83f-7c14657f2738
     m_ActionName: 'Player/Dephase[/Keyboard/p]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 192b973521fc71d49927d2ba696bbde3, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: df987fc5-690a-48c9-9268-ffda4a945585
     m_ActionName: 'Player/grappleClimb[/Mouse/middleButton]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 192b973521fc71d49927d2ba696bbde3, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9b38724b-fc29-48ed-9599-d01f26b50d6c
     m_ActionName: 'Player/grapplePull[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 961739752}
@@ -54453,7 +54506,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -54771,11 +54828,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -57804,7 +57865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
       propertyPath: m_Mass
-      value: 2000
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164266350562924514, guid: 90974cf74ca954941b6b57ce10fb8273, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

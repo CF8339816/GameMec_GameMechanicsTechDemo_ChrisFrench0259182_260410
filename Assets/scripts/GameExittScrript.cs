@@ -23,7 +23,7 @@ public class GameOverManager : MonoBehaviour
 
     //void SetExitCountdownText()
     //{
-    //    exitCountdownText.text = "Game Exit : " + Countdown.ToString() ; // sets count to output to string
+    //    exitCountdownText.text = "Game Exit : " + Countdown.ToString(); // sets count to output to string
     //}
 
 
